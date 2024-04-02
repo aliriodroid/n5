@@ -1,26 +1,17 @@
-# n5
+# employees-api
 
 A .NET REST API that returns Permissions services.
-
 
 ## Getting Started
 
 ### Install
 
 ```bash
-docker compose up
+docker compose up --build
 ```
-
+Swagger
 ```bash
- dotnet restore
- dotnet tool install --global dotnet-ef                 
- dotnet tool update --global dotnet-ef   
- dotnet ef         
- dotnet ef database update
-```
-
-```bash
-dotnet run
+http://127.0.0.1:8080/swagger/index.html
 ```
 
 ## License

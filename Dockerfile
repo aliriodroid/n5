@@ -6,6 +6,7 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
+
 WORKDIR /src
 COPY ["N5User.csproj", "./"]
 RUN dotnet restore "N5User.csproj"

@@ -35,7 +35,7 @@ services:
         - ALLOW_PLAINTEXT_LISTENER=yes
         - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
         - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
-        - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+        - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://kafka:9093
         - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
       depends_on:
         - zookeeper
@@ -48,8 +48,6 @@ services:
     environment:
      - xpack.security.enabled=false
      - discovery.type=single-node
-    networks:
-       - elastic
     
   kibana:
    image: docker.elastic.co/kibana/kibana:8.13.0
@@ -59,18 +57,18 @@ services:
      - elasticsearch
    environment:
      - ELASTICSEARCH_URL=http://localhost:9200
-   networks:
-    - elastic
       
   webapi:
     image: n5user
+    ports:
+        - "8080:8080"
     build:
       context: .
       dockerfile: Dockerfile
-      
-networks:
-  elastic:
-    driver: bridge
+    environment:
+        - ASPNETCORE_URLS=http://*:8080
+        - ConnectionStrings__DefaultConnection=Host=localhost;Database=number_8;Username=number8;Password=number8*;
+
 volumes:
   elasticsearch_data:
   kafka-volume:
